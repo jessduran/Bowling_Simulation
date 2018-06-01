@@ -1,6 +1,7 @@
 #include <windows.h>
 #include <GL/glut.h>
 #include <iostream>
+#include <BowlingPin.h>
 
 using namespace std;
 
@@ -14,6 +15,10 @@ bool rolling = false;
 double a = 0;
 GLfloat max_z = -5.0f;
 GLfloat test = 0.0f;
+GLfloat pin_y = -0.5f;
+GLfloat pin_z = -9.0f;
+
+BowlingPin bowlingPin;
 
 void renderH1(std::string str, GLfloat px, GLfloat py, int r, int g, int b){
     int l = str.size(), i;
@@ -52,8 +57,20 @@ void initGL() {
 void display() {
     if (rolling && z_pos > max_z){
         const double t = glutGet(GLUT_ELAPSED_TIME) / 1000.0;
-        double a = t*90.0;
+        a = t*90.0;
         z_pos -= speed;
+    }
+
+    GLfloat ballWidth = 0.2;
+
+    // checks for collision
+    if (z_pos < max_z){
+        if (x_pos + ballWidth > bowlingPin.getX() &&
+            x_pos < bowlingPin.getX() + bowlingPin.getWidth()) {
+                pin_y-=0.00001;
+                pin_z-=0.001;
+            }
+
     }
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -75,19 +92,7 @@ void display() {
         glutSolidSphere(0.1f,slices,stacks);
     glPopMatrix();
 
-
-    // cone
-    glColor3d(1,1,1);
-    glPushMatrix();
-        glTranslated(0,-0.5f,-9.0f);
-        glutSolidSphere(0.05f,slices, stacks);
-    glPopMatrix();
-
-    glPushMatrix();
-        glTranslated(0,-1.0f,-9.0f);
-        glRotated(180,0,1,1);
-        glutSolidCone(0.1f,0.5f,slices,stacks);
-    glPopMatrix();
+   bowlingPin.drawBowlingPin(0, pin_y, pin_z);
 
     glBegin(GL_QUADS);
         glColor3f(0,0,0);
@@ -137,6 +142,8 @@ void resetDefaults(){
     x_pos = 0;
     speed = 0.001f;
     rolling = false;
+    pin_y = -0.5f;
+    pin_z = -9.0f;
 }
 
 static void key(unsigned char key, int x, int y){
@@ -167,8 +174,6 @@ void specialKey(int key, int x, int y){
         test -= 0.001;
         break;
     }
-
-    cout << test << endl;
 }
 
 

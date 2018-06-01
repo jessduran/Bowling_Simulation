@@ -1,8 +1,9 @@
 # depslib dependency file v1.0
-1527814547 source:c:\users\jessah\documents\c++ projects\simulation\main.cpp
+1527836491 source:c:\users\jessah\documents\c++ projects\simulation\main.cpp
 	<windows.h>
 	<GL/glut.h>
 	<iostream>
+	<BowlingPin.h>
 
 1514748949 c:\program files (x86)\codeblocks\mingw\include\gl\glut.h
 	"freeglut_std.h"
@@ -227,4 +228,11 @@
 1301111164 c:\program files (x86)\codeblocks\mingw\include\gl\glu.h
 	<stddef.h>
 	<GL/gl.h>
+
+1527836193 c:\users\jessah\documents\c++ projects\simulation\include\bowlingpin.h
+	<windows.h>
+	<GL/glut.h>
+
+1527836223 source:c:\users\jessah\documents\c++ projects\simulation\src\bowlingpin.cpp
+	"BowlingPin.h"
 
